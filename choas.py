@@ -31,3 +31,6 @@ class catorgories:
             num_in_cats[i] = num_of
         return num_in_cats
 
+    def get_catagory_num(self,catagory):
+        return self.num_in_cats[catagory]
+    
