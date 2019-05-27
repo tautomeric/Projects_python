@@ -15,15 +15,15 @@ class spectrum:
          self.b = b
          self.q = q
          self.spectrum = []
-        
-         start = a
          self.spectrum_skeleton = {}
         
+         start = a
          while start <= b:
             self.spectrum.append(start)
             self.spectrum_skeleton.update({start:start})
             start = start + q
-            
+         
+    #returns the number of values in a set of numbers for each possible list ceiling    
     def list_ceiling(self,data=np.array([0],dtype=np.int8)):
        
         end = np.size(data) 
@@ -41,7 +41,8 @@ class spectrum:
         list_ceiling = choas.catorgories(self.spectrum_skeleton)
         processed = data
         return list_ceiling.catagorize(processed) 
-    
+   
+    #returns the number of values in a set of numbers for each possible list ceiling  
     def list_floor(self,data=np.array([0],dtype=np.int8)):
         end = np.size(data) 
         locale = 0
@@ -70,7 +71,7 @@ class spectrum:
         list_floor = choas.catorgories(inverse_skeleton)
         return list_floor.catagorize(negative_data)
         
-    
+    #returns the quantium floor of a number for the spectrum
     def spectrum_floor(self,n):
         if self.a <= n<=self.b:
             left_side = 0
@@ -89,7 +90,7 @@ class spectrum:
         else:
             return None
        
-        
+     #returns the quantium ceiling of a number for a spectrum   
     def spectrum_ceiling(self,n):
       
         if self.a <= n<=self.b:
@@ -98,12 +99,90 @@ class spectrum:
                   return i  
         else:
             return None
+     #returns where in an overloaded spectrum a value is, raises an error if the
+     #value is not on the spectrum      
+    def overload(self,n):
+        if n in self.spectrum:
+            return n
+        elif n>self.b:
+            if abs(n-self.b)%self.q==0:
+                return "n"+str(int((n-self.b)/self.q))
+            else:
+                raise ValueError("Undefined Value")
+        elif n<self.a:
+            if abs(self.a-n)%self.q==0:
+                return "n-"+str(int((self.a-n)/self.q))
+            else:
+                raise ValueError("Undefined Value")
+        else:
+            raise ValueError("Undefined Value")
+
+#allows for processing a set of overlayed spectrums          
+class overlay: 
+    #define spectrums in order of the most independent to least
+    def __init__(self,spectra=[spectrum(0,10,2),[0,10,2]]):
+        self.spectra = []
+        for i in range(len(spectra)):
+            if type(spectrum(0,10,2))==type(spectra[i]):
+                self.spectra.append(spectra[i])
+            elif type([]) == type(spectra[i]):
+                appender = spectra[i]
+                self.spectra.append(spectrum(appender[0],appender[1],appender[2]))
+            else:
+                raise TypeError("Only type list or spectrum")
+        
+        self.locations = [[] for _ in range(len(spectra))]
+            
+    def set_ranges(self,new_ranges=[[0, 2], [5, 9]]):
+        self.ranges = np.array(new_ranges)
+    
+    #first value in each list notes the spectrum, second the location on the spectrum
+    def set_locations(self,location=[[0,8]]):
+        for i in range(len(location)):
+            locale,spectra = location[i][1],location[i][0]
+            
+            self.locations[spectra]= np.array(locale)
+            
+    def defined_spectra(self,spectra=0,all_spectra_mode=False):
+        if(not all_spectra_mode):
+            is_defined = True
+            
+            spectra = spectra-1
+            while spectra>=0:
+                location = self.locations[spectra]
+                if not location:
+                    raise TypeError("First set the locations the values are at")
+                
+                ranges = self.ranges[spectra]
+                
+                if not (ranges[0]<= location <= ranges[1]):
+                    is_defined = False
+                    break
+                spectra = spectra-1
+            return is_defined
+        
+        else:
+            spectra = 1
+            total_iters = len(self.spectra)-1
+            
+            spectra_defined = [True]
+            while total_iters>=spectra:
+                location = self.locations[spectra-1]
+                if not location:
+                    raise TypeError("First note the locations the values are at on the spectrum")
+                
+                ranges = self.ranges[spectra]
+                if not (ranges[0]<= location <= ranges[1]):
+                    break
+                
+                spectra_defined.append(True)
+                spectra = spectra + 1
+                
+            while total_iters >= spectra:
+                spectra_defined.append(False)
+                spectra = spectra + 1
              
-a = spectrum(2,10,2)
-b = np.array([1,2,3,3,4,4,5,5,10]) 
-     
-for i in range(len(b)):
-   print(a.spectrum_floor(b[i]))
+            return np.array(spectra_defined)
 
 
 
