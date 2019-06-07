@@ -33,3 +33,76 @@ class catorgories:
 
     def get_catagory_num(self,catagory):
         return self.num_in_cats[catagory]
+
+import math
+from datetime import datetime
+class tools:
+    #returns the ceiling of n/e
+    def stop_point(n):
+        stop_point = 0
+        
+        if type([]) == type(n):
+            stop_point = math.ceil(len(n)/math.e)
+        elif type(2)==type(n):
+            stop_point = math.ceil(n/math.e)
+        else:
+            raise TypeError("stop_point must receive either an int or list")
+        
+        return stop_point
+   
+    #finds the optimal stopping point in a list based on the solution to the
+    #secretary problem. Includes a "negative" option to find the optimal minimum
+    def guess_stop(choices,negative=False):
+        num_choices = len(choices)-1
+        start_point = math.ceil(num_choices/math.e)
+        guess = choices[start_point]
+        
+        if negative:
+            while start_point <= num_choices:
+                if guess>choices[start_point]:
+                    guess = choices[start_point]
+                    break
+                start_point += 1
+        else:
+            while start_point <= num_choices:
+                if guess<choices[start_point]:
+                    guess = choices[start_point]
+                    break
+                start_point += 1
+        return guess
+    
+    def _counter(time="second"):
+        if time == "second":
+            timebank = datetime.now()
+            starttime = timebank.second
+            endTime = timebank.second
+            count = 1
+            while starttime == endTime:
+                timeBank2 = datetime.now()
+                endTime = timeBank2.second
+                count = count + 1
+            return count 
+        else:
+            timebank = datetime.now()
+            starttime = timebank.microsecond
+            endTime = timebank.microsecond
+            count = 1
+            while starttime == endTime:
+                timeBank2 = datetime.now()
+                endTime = timeBank2.microsecond
+                count = count + 1
+            return count 
+        
+    #returns a number coorsponding to the speed the computer is running at
+    def speed_count():
+        tools._counter()
+        return tools._counter()  
+    
+    #returns a random number
+    def random(max_seed):
+        a = tools._counter(time=0)
+        if (a > (a % max_seed)):
+            return a % max_seed
+        else:
+            return max_seed % a
+              
