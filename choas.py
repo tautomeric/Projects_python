@@ -35,6 +35,7 @@ class catorgories:
         return self.num_in_cats[catagory]
 
 import math
+from matplotlib import pyplot as plt
 from datetime import datetime
 class tools:
     #returns the ceiling of n/e
@@ -105,4 +106,17 @@ class tools:
             return a % max_seed
         else:
             return max_seed % a
-              
+  
+     #returns an array with data for a wave with psuedorandom interferance 
+     #also can (see_wave=True) print a graph of a random wave.
+    def random_wave(see_wave=False):
+        cut_points = np.random.randint(2000,4000,2)
+        cut_points.sort()
+        disbute = np.random.normal(4,43,4000)
+        wave = disbute[cut_points[0]:cut_points[1]]
+        
+        if see_wave:
+            plt.plot(wave)
+            plt.fill()
+        
+        return wave
