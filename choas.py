@@ -33,6 +33,26 @@ class catorgories:
 
     def get_catagory_num(self,catagory):
         return self.num_in_cats[catagory]
+     
+    def max_cat(self):
+        most = 0
+        cat = 0
+        
+        for i in self.num_in_cats:
+            if self.num_in_cats[i]>=most:
+                most = self.num_in_cats[i]
+                cat = i
+        return cat
+    
+    def min_cat(self):
+        most = 0
+        cat = 0
+        
+        for i in self.num_in_cats:
+            if self.num_in_cats[i]<=most:
+                most = self.num_in_cats[i]
+                cat = i
+        return cat
 
 import math
 from matplotlib import pyplot as plt
