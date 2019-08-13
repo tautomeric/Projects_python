@@ -8,7 +8,9 @@ import numpy as np
 import choas
 class spectrum:
     def __init__(self,a=0,b=0,q=0):
-         if (b-a)%q != 0:
+         
+         difference_factor = (b-a)/q
+         if difference_factor - int(difference_factor) > .00000000001:
              raise ValueError("Invalid values for spectrum")
          
          self.a = a
