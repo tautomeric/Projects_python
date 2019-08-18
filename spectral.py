@@ -118,6 +118,25 @@ class spectrum:
                 raise ValueError("Undefined Value")
         else:
             raise ValueError("Undefined Value")
+    
+    def addition(self, other):
+        s_3 = spectrum(1,1,1)
+        s_3.reset_spectra(sorted(set(self.spectrum)|set(other.spectrum)))
+        return s_3
+    
+    def subtraction(self,other):
+       s_3 = spectrum(1,1,1)
+       s_3.reset_spectra(sorted(set(self.spectrum)^set(other.spectrum)))
+       return s_3
+    
+    def reset_spectra(self,spectrum = [0,1,5]):
+        spectrum.sort()
+        self.spectrum = spectrum
+        new_skeleton = {}
+        
+        for i in spectrum:
+            new_skeleton.update({i:i})
+        self.spectrum_skeleton = new_skeleton
 
 #allows for processing a set of overlayed spectrums          
 class overlay: 
