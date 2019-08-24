@@ -1,2 +1,2 @@
 # Projects_python
-Python files
+Personnal projects done in python. Includes information on "spectrum theory" in the form of pdf and LaTex documents.
