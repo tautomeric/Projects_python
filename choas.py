@@ -3,8 +3,7 @@ import numpy as np
 class catorgories:
     def __init__(self,cat_specs={"defualt":0}):
         self.cat_specs = cat_specs
-        
-        
+         
     def catagorize(self,values=np.array([0],dtype="int8")):
         local = 0
         values.append(0)
@@ -136,3 +135,10 @@ class tools:
             plt.fill()
         
         return wave
+
+    #returns when number of integer jumps until lambda a excedes lambda b
+    #errors to add when used: that the equations do not intersect at any point
+    def met_point(a=lambda o:o,b=lambda o:math.log2(o),i=1):
+        while a(i)< b(i):
+            i+=1
+        return i
