@@ -142,3 +142,23 @@ class tools:
         while a(i)< b(i):
             i+=1
         return i
+    
+    def probable_same(a=lambda o:o,b=lambda o:math.log2(o),trials=100):
+        same=True
+        most=0
+        for i in range(trials):
+            test_value=tools.random(100)+most
+            print(test_value)
+            most=test_value+1
+            if(a(test_value)!=b(test_value)):
+                same=False
+                break
+        return same
+    
+    def blind_prob(data=[1,1,2],win=1):
+        wins=0
+        for i in data:
+            if i==win:
+                wins+=1
+                
+        return (wins+1)/(len(data)+2)
