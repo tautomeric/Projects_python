@@ -83,6 +83,5 @@ class generator():
         
         return result
        
-if __name__=="__main__":
-    a=generator([[.5,.5],[.34,.66]])
+
     
